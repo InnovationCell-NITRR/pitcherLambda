@@ -15,7 +15,7 @@ const nameCodeSchema = new mongoose.Schema({
   },
   userStock: {
     type: Number,
-    default: 1000,
+    default: 100,
   },
   buyHistory: [
     {
