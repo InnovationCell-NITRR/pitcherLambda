@@ -17,11 +17,23 @@ const loginUser = async (req, res, next) => {
   console.log(user);
 
   if (!user) {
-    return res.status(400).json({
-      message: "Invalid Code",
+    const isActive = true;
+    const userCode = new Code({
+      name,
+      code,
+      isActive,
+    });
+    const selfCode = await userCode.save();
+
+    const token = await selfCode.getJWTToken();
+    const userId = selfCode._id;
+    return res.status(200).json({
+      success: true,
+      info: selfCode,
+      token,
+      userId: userId,
     });
   }
-
   user.name = name;
   user.isActive = true;
   await user.save();
